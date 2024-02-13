@@ -18,7 +18,7 @@ def file_permission(scan_file: str, permissions_dict: dict) -> dict:
 
 def search(
     path: str,
-    threshold_value: dict,
+    threshold_value: int,
     higher_threshold_dict: dict,
     sizes_dict: dict,
     categories_dict: dict,
@@ -27,7 +27,7 @@ def search(
     try:
         files_and_directories = os.listdir(path)
         for i in range(len(files_and_directories)):
-            scan_file = path + "/" + files_and_directories[i]
+            scan_file = os.path.join(path, files_and_directories[i])
             directory = os.path.isdir(scan_file)
             file_permission(scan_file, permissions_dict)
             if directory == True:
@@ -40,8 +40,6 @@ def search(
                         categories_dict,
                         permissions_dict,
                     )
-                except PermissionError:
-                    print("Нет доступка к папке:", scan_file)
                 except Exception as e:
                     print("Произошла ошибка при открытии файла:", e)
             elif directory == False:
@@ -68,7 +66,7 @@ def search(
                     print("Произошла ошибка при открытии файла:", e)
         return categories_dict, sizes_dict, higher_threshold_dict
     except Exception as e:
-        print("Произошла ошибка:", e)
+        print("Произошла ошибка при открытии папки:", e)
 
 
 def main():
@@ -80,7 +78,7 @@ def main():
         description="File System Analyzer with File Type Categorization"
     )
     parser.add_argument("indir", type=str, help="Path to analyze (default is /)")
-    parser.add_argument("invalue", type=int, help="Path to analyze (default is /)")
+    parser.add_argument("invalue", type=int, help="Пороговый размер файла (default is byte)")
     args = parser.parse_args()
 
     path = args.indir

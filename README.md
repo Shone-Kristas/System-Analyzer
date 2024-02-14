@@ -4,11 +4,12 @@ System-Analyzer is a command-line tool designed to analyze Linux file structure:
 * Generates a report of files with unusual permission settings.
 
 To run the System-Analyzer tool:
-* Clone the repository 
+* Clone the repository
 * Install dependencies: 
   ```
   pip install python-magic
   ```
+* Navigate to the *System-Analyzer/src* directory
 * Run the tool: 
   ```
   python main.py {path} {value}
